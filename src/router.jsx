@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: "find-job", element: <FindJob /> },
+      { path: "jobs", element: <FindJob /> },
     ],
   },
   { path: "/sign-in", element: <SignIn /> },

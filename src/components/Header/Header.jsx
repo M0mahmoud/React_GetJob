@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../../context/user.context";
 
 const Header = () => {
+  const { userData, setUserData } = useUser();
+
+  const handleLogout = () => {
+    setUserData({});
+    localStorage.removeItem("userData");
+  };
   return (
     <>
       <header className="w-100 py-2 mx-auto  items-center justify-between hidden sm:flex">
@@ -23,19 +30,37 @@ const Header = () => {
           </div>
         </nav>
         <div className="flex items-center gap-2">
-          <Link
-            to="sign-in"
-            className="border p-3 font-semibold text-main-blue"
-          >
-            SignIn
-          </Link>
-          <Link
-            to="sign-up"
-            href="sign-up"
-            className="border p-3 border-main-blue font-semibold text-white bg-main-blue"
-          >
-            SignUp
-          </Link>
+          {userData && userData.userId ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="border p-3 font-semibold text-main-blue"
+              >
+                Logout
+              </button>
+              <Link
+                to="username"
+                className="border p-3 border-main-blue font-semibold text-white bg-main-blue"
+              >
+                Profile
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="sign-in"
+                className="border p-3 font-semibold text-main-blue"
+              >
+                SignIn
+              </Link>
+              <Link
+                to="sign-up"
+                className="border p-3 border-main-blue font-semibold text-white bg-main-blue"
+              >
+                SignUp
+              </Link>
+            </>
+          )}
         </div>
       </header>
     </>

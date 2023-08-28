@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../../context/user.context";
 import useAPI from "../../lib/useAPI";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { setUserData } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
@@ -21,10 +23,8 @@ const SignIn = () => {
       body: JSON.stringify(data),
     });
     if (!error) {
-      const { token, userId } = userData;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", userId);
-      navigate("/");
+      setUserData(userData);
+      navigate("/", { replace: true });
     }
   };
 
