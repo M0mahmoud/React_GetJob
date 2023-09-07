@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ErrorDiv from "../../components/UI/ErrorDiv";
 import useAPI from "../../lib/useAPI";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const { error, loading, fetchData } = useAPI();
-  console.log("error:", error);
+  const { error, loading, fetchData, data } = useAPI();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const SignUp = () => {
       email,
       password,
       name,
+      username,
     };
 
     await fetchData("http://localhost:8000/auth/signup", {
@@ -27,10 +29,10 @@ const SignUp = () => {
       },
       body: JSON.stringify(data),
     });
-    if (!error) {
-      navigate("/");
-    }
   };
+  if (!error && data?.status === "success") {
+    navigate("/sign-in");
+  }
   return (
     <>
       <div className="min-h-screen bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
@@ -80,6 +82,22 @@ const SignUp = () => {
                 aria-labelledby="name"
                 type="name"
                 id="name"
+                className="bg-gray-200 border rounded  text-base font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2 focus:outline-none "
+              />
+            </div>
+            <div className="mt-2 w-full">
+              <label
+                htmlFor="username"
+                className="text-sm font-medium leading-none text-gray-800"
+              >
+                UserName
+              </label>
+              <input
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+                aria-labelledby="username"
+                type="username"
+                id="username"
                 className="bg-gray-200 border rounded  text-base font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2 focus:outline-none "
               />
             </div>
@@ -133,9 +151,7 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              {error && <div className="text-red-500">{error.msg}</div>}
-            </div>
+            <ErrorDiv error={error} />
             <div className="mt-8">
               <button
                 role="button"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ErrorDiv from "../../components/UI/ErrorDiv";
 import { useUser } from "../../context/user.context";
 import useAPI from "../../lib/useAPI";
 
@@ -22,11 +23,11 @@ const SignIn = () => {
       },
       body: JSON.stringify(data),
     });
-    if (!error) {
-      setUserData(userData);
-      navigate("/", { replace: true });
-    }
   };
+  if (!error && userData?.status === "success") {
+    setUserData(userData.data);
+    navigate("/", { replace: true });
+  }
 
   return (
     <>
@@ -114,9 +115,7 @@ const SignIn = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              {error && <div className="text-red-500">{error.msg}</div>}
-            </div>
+            <ErrorDiv error={error} />
             <div className="mt-8">
               <button
                 type="submit"

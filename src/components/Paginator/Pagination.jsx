@@ -1,3 +1,5 @@
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
 const Pagination = ({ pageNumber, isNext }) => {
@@ -25,25 +27,22 @@ const Pagination = ({ pageNumber, isNext }) => {
   if (!isNext && pageNumber === 1) return null;
 
   return (
-    <div className="flex justify-center items-center gap-2 my-6">
+    <div className="join  my-6 flex justify-center border border-main-blue50 w-fit mx-auto">
       <button
         onClick={() => handleNavigation("prev")}
-        className={`${
-          pageNumber == 1 ? "hidden" : "block"
-        } border p-3 rounded-md border-main-blue font-semibold text-white bg-main-blue !text-small-regular text-light-2`}
+        className="join-item btn border-none"
       >
-        Prev
+        <FontAwesomeIcon icon={faArrowLeft} />
       </button>
-      <button className=" border p-3 rounded-md border-main-blue font-semibold text-white bg-main-blue text-small-semibold text-light-1">
+      <button className="join-item btn border-none bg-main-blue50">
+        {" "}
         {pageNumber}
       </button>
       <button
         onClick={() => handleNavigation("next")}
-        className={`${
-          !isNext ? "hidden" : "block"
-        } border p-3 rounded-md border-main-blue font-semibold text-white bg-main-blue !text-small-regular text-light-2`}
+        className="join-item btn border-none"
       >
-        Next
+        <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
   );
