@@ -4,7 +4,7 @@ const Loading = () => {
   return (
     <div className="loading-container min-h-[300px]">
       <img
-        src="./vite.svg"
+        src="/vite.svg"
         alt=""
         width={45}
         height={45}

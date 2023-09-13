@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className="footer px-4 py-10 bg-main-footer1 text-mainText-p">
         <aside>
           <img
-            src="./vite.svg"
+            src="/vite.svg"
             alt="Footer"
             width={80}
             height={80}

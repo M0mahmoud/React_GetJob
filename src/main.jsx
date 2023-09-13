@@ -7,11 +7,12 @@ import "./index.css";
 import { router } from "./router.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <UserProvider>
-      <RouterProvider router={router}>
-        <App />
-      </RouterProvider>
-    </UserProvider>
-  </React.StrictMode>
+  // TODO
+  // <React.StrictMode>
+  <UserProvider>
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  </UserProvider>
+  // </React.StrictMode>
 );
