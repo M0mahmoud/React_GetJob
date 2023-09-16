@@ -2,13 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import formatTime from "../../lib/FormateDate";
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, from }) => {
+  console.log("from:", from);
   return (
     <div className="w-full gap-4 flex flex-col md:flex-row items-stretch md:items-center justify-between border border-mainText-p rounded p-2 md:p-4">
       <div className=" flex gap-5 flex-col sm:flex-row">
-        <img src="./vite.svg" width={60} height={60} alt="" />
+        <img src="/vite.svg" width={60} height={60} alt="" />
         <div className="flex flex-col justify-center items-start gap-1">
-          <Link to={job._id} className=" text-mainText-t text-xl font-semibold">
+          <Link
+            to={from === "AppliedJobs" ? `/jobs/${job._id}` : job._id}
+            className=" text-mainText-t text-xl font-semibold"
+          >
             {job.title}
           </Link>
           <p className="font-normal text-base text-mainText-p">
@@ -40,7 +44,7 @@ const JobCard = ({ job }) => {
       </div>
       <div className="flex gap-2 flex-col  ">
         <Link
-          to={job._id}
+          to={from === "AppliedJobs" ? `/jobs/${job._id}` : job._id}
           className="w-full text-center sm:w-fit block border p-3 border-main-blue rounded font-semibold text-white bg-main-blue"
         >
           See More

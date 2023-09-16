@@ -15,6 +15,7 @@ import useAPI from "../../lib/useAPI";
 const Profile = () => {
   const { userData } = useUser();
   const { data: user, loading, fetchData } = useAPI();
+  console.log("user:", user);
 
   const userApiUrl = useMemo(
     () => `http://localhost:8000/user/${userData.username}`,
@@ -37,8 +38,8 @@ const Profile = () => {
     {
       id: 1,
       title: "Total Jobs Applied",
-      to: "/",
-      number: user?.user?.appliedJob.length,
+      to: `applied-jobs`,
+      number: user?.data.user?.appliedJob.length || 0,
       icon: faFile,
     },
     {
@@ -62,7 +63,7 @@ const Profile = () => {
       <div className="flex flex-col">
         <h1 className="font-semibold text-2xl text-mainText-h">
           Good Morning{" "}
-          <span className="text-main-blue50">{user?.user?.name}</span>
+          <span className="text-main-blue50">{user?.data.user?.name}</span>
         </h1>
         <p className="font-normal text-base text-mainText-p">
           Here is your job listing statistic report.{" "}

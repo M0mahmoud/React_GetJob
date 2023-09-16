@@ -29,7 +29,7 @@ const FindJob = () => {
       return (
         <div className="grid grid-cols-1  gap-3">
           {jobs?.data.jobs.map((job) => (
-            <JobCard key={job._id} job={job} />
+            <JobCard from={"FindJob"} key={job._id} job={job} />
           ))}
         </div>
       );
