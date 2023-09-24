@@ -125,6 +125,9 @@ const SignIn = () => {
                 {loading ? "Loading..." : "SignIn"}
               </button>
             </div>
+            <div className="mt-4">
+              <Link to={"/forgot-password"}>Forgot password?</Link>
+            </div>
           </form>
         </div>
       </div>
