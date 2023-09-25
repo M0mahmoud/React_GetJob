@@ -14,7 +14,8 @@ import useAPI from "../../lib/useAPI";
 
 const Profile = () => {
   const { userData } = useUser();
-  const { data: user, loading, fetchData } = useAPI();
+  const { data, loading, fetchData } = useAPI();
+  const user = data?.data.user;
   console.log("user:", user);
 
   const userApiUrl = useMemo(
@@ -39,7 +40,7 @@ const Profile = () => {
       id: 1,
       title: "Total Jobs Applied",
       to: `applied-jobs`,
-      number: user?.data.user?.appliedJob.length || 0,
+      number: user?.appliedJob.length || 0,
       icon: faFile,
     },
     {
@@ -62,12 +63,47 @@ const Profile = () => {
     <div className="py-4 ">
       <div className="flex flex-col">
         <h1 className="font-semibold text-2xl text-mainText-h">
-          Good Morning{" "}
-          <span className="text-main-blue50">{user?.data.user?.name}</span>
+          Good Morning <span className="text-main-blue50">{user?.name}</span>
         </h1>
-        <p className="font-normal text-base text-mainText-p">
-          Here is your job listing statistic report.{" "}
-        </p>
+      </div>
+      <div className=" mt-3 py-3 border-y border-y-main-blue50">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between">
+          <div className="flex justify-start items-center gap-4">
+            <img src="/vite.svg" alt="" width={50} height={50} />
+            <div>
+              <h2>{user?.title}</h2>
+              <p className="text-mainText-p">@{user?.username}</p>
+            </div>
+          </div>
+          <Link
+            to={"edit"}
+            className="border text-center p-3 border-main-blue50 font-semibold text-main-blue50 transition-colors hover:bg-main-blue50 hover:text-white"
+          >
+            Edit Profile
+          </Link>
+        </div>
+        <div className="py-4">
+          <h1 className=" text-mainText-t text-xl font-semibold mb-3">
+            Skills
+          </h1>
+          <div className="flex gap-4 flex-wrap">
+            {user?.skills.length === 0 && (
+              <>
+                <p className="font-normal text-base text-mainText-p">
+                  You don't have any skills yet...
+                </p>
+              </>
+            )}
+            {user?.skills.map((skill) => (
+              <p
+                key={skill.value}
+                className="px-2 py-1 sm:px-5 sm:py-3 text-mainText-t bg-mainText-p/50 rounded-md w-fit"
+              >
+                {skill.label}
+              </p>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="mt-5 flex flex-col md:flex-row justify-start gap-3 items-start">
         {DATA_CARDS.map((el) => (
@@ -93,6 +129,9 @@ const Profile = () => {
         ))}
       </div>
       <div className="mt-6">
+        <p className="font-normal text-base text-mainText-p">
+          Here is your job listing statistic report.{" "}
+        </p>
         <ChartView />
       </div>
     </div>
