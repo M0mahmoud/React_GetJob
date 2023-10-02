@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 import formatTime from "../../lib/FormateDate";
 
 const JobCard = ({ job, from }) => {
-  console.log("from:", from);
   return (
     <div className="w-full gap-4 flex flex-col md:flex-row items-stretch md:items-center justify-between border border-mainText-p rounded p-2 md:p-4">
       <div className=" flex gap-5 flex-col sm:flex-row">
         <img src="/vite.svg" width={60} height={60} alt="" />
         <div className="flex flex-col justify-center items-start gap-1">
           <Link
-            to={from === "AppliedJobs" ? `/jobs/${job._id}` : job._id}
+            to={
+              from === "AppliedJobs"
+                ? `/jobs/${String(job._id)}`
+                : String(job._id)
+            }
             className=" text-mainText-t text-xl font-semibold"
           >
             {job.title}
@@ -24,7 +27,7 @@ const JobCard = ({ job, from }) => {
             </p>
             <div className="w-[2px] h-full bg-slate-300" />
             <div className="flex">
-              {job.skillsRequired.map((skill, index) => (
+              {job.skills.map((skill, index) => (
                 <p
                   key={index}
                   className={`border truncate  text-xs sm:text-sm font-medium px-2 py-1 rounded-full mr-1 sm:mr-2 ${
@@ -35,7 +38,7 @@ const JobCard = ({ job, from }) => {
                       : " hidden sm:block"
                   }`}
                 >
-                  {skill}
+                  {skill.value}
                 </p>
               ))}
             </div>

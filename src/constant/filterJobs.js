@@ -1,24 +1,14 @@
 export const filterJobs = [
   {
+    id: 1,
     title: "Job Type",
-    options: ["Full-time", "Part-Time", "Internship", "Remote", "Contract"],
-    name: "employment",
+    options: ["full-time", "part-time", "internship", "remote", "contract"],
+    name: "type",
   },
   {
+    id: 2,
     title: "Job Level",
-    options: ["Entry Level", "Mid Level", "Senior Level"],
+    options: ["entry-level", "mid-level", "senior-level"],
     name: "level",
-  },
-  {
-    title: "Categories",
-    options: [
-      "Design",
-      "Sales",
-      "Engineering",
-      "Technology",
-      "Human Resource",
-      "Marketing",
-    ],
-    name: "category",
   },
 ];

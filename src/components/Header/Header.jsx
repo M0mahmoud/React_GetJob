@@ -4,18 +4,21 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/user.context";
 import useAPI from "../../lib/useAPI";
+import { isExpired } from "react-jwt";
 
 const Header = () => {
-  const { userData, setUserData } = useUser();
+  const { userData } = useUser();
   const { data: user, loading, fetchData } = useAPI();
+  const { username, token } = userData;
+  const tokenIsExpired = isExpired(token);
 
   const userApiUrl = useMemo(
-    () => `http://localhost:8000/user/${userData.username}`,
-    [userData.username]
+    () => `http://localhost:8000/user/${username}`,
+    [username]
   );
 
   const fetchUserData = useCallback(async () => {
-    if (userData.username) {
+    if (username) {
       await fetchData(userApiUrl);
     }
   }, [userData]);
@@ -24,10 +27,10 @@ const Header = () => {
     fetchUserData();
   }, [fetchUserData]);
 
-  const handleLogout = () => {
-    setUserData({});
-    localStorage.removeItem("userData");
-  };
+  // const handleLogout = () => {
+  //   setUserData({});
+  //   localStorage.removeItem("userData");
+  // };
   return (
     <>
       <header className="navbar bg-base-100 text-white">
@@ -82,14 +85,8 @@ const Header = () => {
         </div>
         <div className="navbar-end">
           <div className="flex items-center gap-2">
-            {userData && userData.userId ? (
+            {!tokenIsExpired ? (
               <>
-                {/* <button
-                  onClick={handleLogout}
-                  className="border p-3 font-semibold text-main-blue"
-                >
-                  Logout
-                </button> */}
                 <Link
                   to={user?.data.user.username}
                   className="border p-3 border-main-blue font-semibold text-white bg-main-blue"

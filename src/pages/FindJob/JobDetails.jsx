@@ -70,7 +70,7 @@ const JobDetails = () => {
   if (!loading && error) {
     return <ErrorDiv error={error} />;
   }
-
+  // TODO: Refactor this Component
   return (
     <div>
       <div className="flex gap-5 pb-8 flex-col sm:flex-row">
@@ -84,12 +84,17 @@ const JobDetails = () => {
           <h1 className="mb-3 text-mainText-t text-xl font-semibold">
             {job?.title}
           </h1>
-          <p className="px-5 py-2 text-main-blue50 border border-text-main-blue50 bg-main-blue50/20 rounded-md w-fit">
-            {job?.jobType}
-          </p>
         </div>
       </div>
-      <div className="mb-4">
+      <div className="flex gap-4 items-start">
+        <p className="px-5 py-2 text-main-blue50 border border-text-main-blue50 bg-main-blue50/20 rounded-md w-fit capitalize">
+          {job?.jobType.replace("-", " ")}
+        </p>
+        <p className="px-5 py-2 text-main-blue50 border border-text-main-blue50 bg-main-blue50/20 rounded-md w-fit capitalize">
+          {job?.level.replace("-", " ")}
+        </p>
+      </div>
+      <div className="my-4">
         <h1 className=" text-mainText-t text-xl font-semibold mb-3">
           Description
         </h1>
@@ -105,12 +110,12 @@ const JobDetails = () => {
       <div className="py-8">
         <h1 className=" text-mainText-t text-xl font-semibold mb-3">Skills</h1>
         <div className="flex gap-4 flex-wrap">
-          {job?.skillsRequired.map((skill) => (
+          {job?.skills.map((skill) => (
             <p
-              key={skill}
+              key={skill._id}
               className="px-5 py-3 text-mainText-t bg-mainText-p/50 rounded-md w-fit"
             >
-              {skill}
+              {skill.value}
             </p>
           ))}
         </div>
